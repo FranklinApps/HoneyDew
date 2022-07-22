@@ -58,7 +58,7 @@ module.exports = {
         res.json({ message: "Logged out" })
     },
 
-    getLoggedInUser:(req, res) => {
+    getUser:(req, res) => {
         User.findById(req.jwtPayload.id)
             .then(user => {
                 console.log(user);
