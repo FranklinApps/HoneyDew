@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const bcyrpt = require("bcrypt");
+const bcrypt = require("bcrypt");
 
 const UserSchema = new mongoose.Schema({
     username:{
@@ -15,8 +15,23 @@ const UserSchema = new mongoose.Schema({
         required: [true, "Password is required"],
     },
     dews:
-        [{type: Schema.Types.ObjectId, ref: "Dews"}]
+        [DewSchema]
 },{timestamps:true});
+
+const DewSchema = new mongoose.Schema({
+    task: {
+        type: String,
+        required: [true, "Task is required"],
+    },
+
+    completed: {
+        type: Boolean,
+    },
+    notes: {
+        type: String,
+        maxLength: [240, "Notes cannot be longer than 240 characters"],
+    }
+}, {timestamps: true});
 
 UserSchema.virtual("confirmPassword")
     .get(()=>this._confirmPassword)
@@ -38,4 +53,3 @@ UserSchema.virtual("confirmPassword")
                 })
     })
 module.exports = mongoose.model("User", UserSchema);
- 
